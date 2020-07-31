@@ -1,0 +1,922 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: "微軟正黑體";
+  box-sizing: border-box;
+}
+
+// 尺寸列表
+
+@mixin ssm {
+  @media (min-width: 414px) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media (min-width: 576px) {
+    @content;
+  }
+}
+@mixin md {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: 992px) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin xxl {
+  @media (min-width: 1400px) {
+    @content;
+  }
+}
+
+$baseSize: 1rem;
+$width: 50px;
+@function fonSize($level: 0) {
+  @return $baseSize * $level;
+}
+@function width($level: 0) {
+  @return $width * $level;
+}
+
+.vs-popup {
+  .vs-popup--header {
+    h3 {
+      font-size: 2rem;
+      color: brown;
+      text-align: center;
+    }
+  }
+  .vs-popup--content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    img {
+      object-fit: cover;
+      max-width: 100%;
+    }
+  }
+}
+
+.vs-notifications{
+  h3{
+    padding: 1rem;
+    margin-bottom: 0;
+  }
+  p{
+    display: none;
+  }
+  .vs-icon-noti{
+    padding: 0;
+    background: hsla(0, 0, 0, 0) !important;
+  }
+}
+
+#app {
+  #navbarContent {
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    transition: opacity 0.5s;
+    .row {
+      justify-content: space-around;
+      flex-direction: column;
+      align-items: center;
+      font-size: 2rem;
+      text-shadow: 0 0 5px black;
+      font-weight: bolder;
+      a {
+        color: white;
+        position: relative;
+        &:hover {
+          text-decoration: none;
+        }
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          height: 1px;
+          width: 0;
+          left: -100vw;
+          z-index: 999;
+          background-color: white;
+          transition: 0.5s;
+        }
+        &:hover::before {
+          left: -30px;
+          width: 20px;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          height: 1px;
+          width: 0;
+          right: -100vw;
+          z-index: 999;
+          background-color: white;
+          transition: 0.5s;
+        }
+        &:hover::after {
+          width: 20px;
+          right: -30px;
+        }
+      }
+    }
+    svg {
+      position: absolute;
+      right: 3%;
+      top: 3%;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+    }
+  }
+  #bigNav {
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    z-index: 10;
+    cursor: pointer;
+  }
+}
+
+// 首頁
+
+#home {
+  height: 100vh;
+  div {
+    max-width: 100%;
+    padding: 0;
+    transition: 2s;
+  }
+  @include md {
+    div {
+      overflow: hidden;
+    }
+  }
+  a {
+    position: relative;
+    height: 100%;
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: fonSize(2.5);
+    text-decoration: none;
+    text-shadow: 0 0 5px black;
+    font-weight: bolder;
+    &::before {
+      content: "";
+      position: absolute;
+      width: width(0);
+      height: 1px;
+      z-index: 999;
+      top: calc(50% - 30px);
+      left: calc(50% - 75px);
+      background-color: white;
+      animation: width 0.5s ease 2s forwards;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      width: width(0);
+      height: 1px;
+      z-index: 999;
+      top: calc(50% + 30px);
+      right: calc(50% - 75px);
+      background-color: white;
+      animation: width 0.5s ease 2.5s forwards;
+    }
+  }
+}
+
+@keyframes width {
+  from {
+    width: 0;
+  }
+  to {
+    width: width(3);
+  }
+}
+
+.backdrop {
+  &:hover {
+    backdrop-filter: brightness(20%);
+  }
+}
+
+// 商品頁面
+
+#product {
+  height: 100vh;
+  #header{
+    position: relative;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg{
+      position: absolute;
+      bottom: 0;
+    }
+  }
+  .hooper{
+    height: 300px;
+    padding-top: 5rem;
+    .hooper-track{
+      display: flex;
+      align-items: center;
+      .hooper-slide{
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .img{
+          width: calc(100% - 10px);
+          height: calc(50vw - 90px);
+          border-radius: 50%;
+          margin: 1rem 0;
+        }
+        @include sm{
+          .img{
+            width: 100%;
+            height: calc(50vw - 120px);
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+  .cardImg {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    &:hover::after {
+      content: "more detail";
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      pointer-events: none;
+      color: white;
+      font-size: 1.5rem;
+    }
+    img {
+      object-fit: cover;
+      max-width: 300%;
+      max-height: 300%;
+      transform: translate(-33%, -25%);
+      transition: transform 0.5s;
+      position: relative;
+      &:hover {
+        transform: scale(1.1) translate(-30%, -25%);
+        filter: brightness(50%);
+      }
+    }
+  }
+  .cardText {
+    button {
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+#about {
+  section {
+    @include sm {
+      h4 {
+        font-size: fonSize(2);
+      }
+    }
+    @include md {
+      h4 {
+        font-size: fonSize(3);
+      }
+    }
+    @include xl {
+      h4 {
+        font-size: fonSize(4);
+      }
+    }
+    &:nth-child(1) {
+      display: block;
+    }
+    &:nth-child(2) {
+      color: white;
+      .story {
+        max-width: 80%;
+        img {
+          object-fit: cover;
+          max-width: 100%;
+          border-radius: 1rem;
+        }
+      }
+    }
+    &:nth-child(3) {
+      color: black;
+      text-shadow: 0 0 5px white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      background: url(https://picsum.photos/1920/1080/?random=70) no-repeat
+        fixed center/cover;
+      .particle {
+        padding: 1rem 0 1rem 0;
+        text-align: center;
+        .icon {
+          background-color: #52453c;
+          border-radius: 50%;
+          width: 100px;
+          height: 100px;
+          border: 5px solid goldenrod;
+        }
+        @include sm {
+          text-align: left;
+          &:nth-child(even) {
+            flex-direction: row-reverse;
+            text-align: right;
+          }
+        }
+      }
+      img {
+        object-fit: cover;
+        max-width: 100%;
+      }
+    }
+    &:nth-child(4) {
+      color: white;
+      .story {
+        max-width: 80%;
+        img {
+          object-fit: cover;
+          max-width: 100%;
+          border-radius: 5px;
+        }
+      }
+    }
+    &:nth-child(5) {
+      color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      .h-card {
+        &:nth-child(even) {
+          flex-direction: row-reverse;
+        }
+        img {
+          object-fit: cover;
+          max-width: 100%;
+          border-radius: 5px;
+        }
+      }
+    }
+    // VueAgile styles
+    .agile {
+      .agile__nav-button {
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        font-size: 24px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        transition-duration: 0.3s;
+        width: 15vw;
+      }
+      .agile__nav-button--prev {
+        left: 0;
+        &:hover {
+          background: linear-gradient(-90deg, transparent, rgba(#000, 0.5));
+          opacity: 1;
+        }
+      }
+      .agile__nav-button--next {
+        right: 0;
+        &:hover {
+          background: linear-gradient(90deg, transparent, rgba(#000, 0.5));
+          opacity: 1;
+        }
+      }
+
+      .agile__dots {
+        bottom: 10px;
+        left: 50%;
+        position: absolute;
+        transform: translateX(-50%);
+      }
+
+      .agile__dot {
+        margin: 0 10px;
+        button {
+          background-color: transparent;
+          border: 1px solid #fff;
+          border-radius: 50%;
+          cursor: pointer;
+          display: block;
+          height: 10px;
+          font-size: 0;
+          line-height: 0;
+          margin: 0;
+          padding: 0;
+          transition-duration: 0.3s;
+          width: 10px;
+        }
+        &:hover {
+          button {
+            background-color: #fff;
+          }
+        }
+      }
+      .agile__dot--current {
+        button {
+          background-color: #fff;
+        }
+      }
+    }
+    // Slides styles
+    .slide {
+      object-fit: cover;
+      max-width: 100%;
+      @include sm {
+        height: 100vh;
+      }
+    }
+  }
+  @include sm {
+    section {
+      overflow: hidden;
+      &:nth-child(1),
+      &:nth-child(3) {
+        height: 100vh;
+      }
+    }
+  }
+}
+
+#contact {
+  height: 100vh;
+  padding-top: 4rem;
+  img {
+    object-fit: cover;
+    max-width: 100%;
+  }
+}
+
+#news {
+  padding-top: 5rem;
+  transition: 1s;
+  .carditem {
+    &:last-child {
+      padding-top: 1rem;
+      @include sm {
+        padding: none;
+      }
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  #sort {
+    padding-right: 2rem;
+    label {
+      margin-bottom: 0;
+    }
+  }
+  .col{
+    transition: 0.5s;
+    box-shadow: 0px 0px 5px black;
+    &:hover{
+      transform: translateY(-10px);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+#login {
+  background: url("https://picsum.photos/1920/1080/?random=1") no-repeat fixed
+    center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  .row {
+    padding: 1rem 0 1rem 0;
+    color: white;
+    position: relative;
+    &::after {
+      content: "OR";
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background-color: white;
+      color: black;
+      border-radius: 1rem;
+      @include lg {
+        top: 50%;
+      }
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 75%;
+      height: 1px;
+      background-color: white;
+      @include lg {
+        top: 50%;
+        width: 1px;
+        height: 75%;
+      }
+    }
+  }
+  form {
+    width: 75%;
+    @include xl {
+      font-size: 2rem;
+    }
+    button {
+      @include xl {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  .col-12:last-child {
+    button {
+      width: 75%;
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      @include xl {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  .footer {
+    max-width: 50%;
+    margin: auto;
+    font-size: 0.5rem;
+    color: white;
+    @include md {
+      font-size: 1rem;
+    }
+  }
+  a {
+    font-size: 0.5rem;
+    text-decoration: underline;
+    @include md {
+      font-size: 1rem;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+#sign {
+  background: url("https://picsum.photos/1920/1080/?random=1") no-repeat fixed
+    center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  .row {
+    padding: 5rem 0 1rem 0;
+    color: white;
+    width: 90%;
+    position: relative;
+    @include lg {
+      width: 50%;
+    }
+  }
+  .logo {
+    position: absolute;
+    top: 0;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    border-radius: 50%;
+  }
+  form {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    @include xl {
+      font-size: 2rem;
+    }
+    small {
+      font-size: 1rem;
+    }
+    button {
+      align-self: center;
+      width: fit-content;
+      @include xl {
+        font-size: 1.5rem;
+      }
+    }
+    .invalid-feedback {
+      font-size: 1rem;
+    }
+  }
+}
+
+#member {
+  background: url("https://picsum.photos/1920/1080/?random=1") no-repeat fixed
+    center/cover;
+  .b-sidebar-outer {
+    position: sticky !important;
+    #sidebar {
+      position: sticky !important;
+      background-color: rgba(0, 0, 0, 0.8) !important;
+      text-align: center;
+      padding-top: 1rem;
+      .sidebar-item {
+        color: white;
+        font-size: 1rem;
+        width: 80%;
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+      }
+      .sidebar-item2 {
+        color: white;
+        font-size: 1rem;
+        width: 80%;
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        @include lg {
+          display: none;
+        }
+      }
+    }
+    .b-sidebar-backdrop {
+      position: absolute !important;
+      width: 100%;
+    }
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  #profile {
+    height: calc(100vh - 59px);
+    img {
+      height: 100%;
+    }
+    .detail {
+      height: 75%;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        background-color: black;
+        transform: translate(-50%, -50%);
+        @include xl {
+          top: 55%;
+          left: 35%;
+          width: 1px;
+          height: 75%;
+        }
+      }
+      .size {
+        max-width: 100%;
+      }
+      @include xl {
+        height: 75%;
+      }
+    }
+    .personal {
+      height: 15vh;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        @include xl {
+          width: 90%;
+          height: 1px;
+          bottom: -25%;
+          left: 50%;
+          background-color: black;
+          transform: translate(-50%, -50%);
+        }
+      }
+      @include lg {
+        height: 20vh;
+      }
+    }
+  }
+  #privacy {
+    height: calc(100vh - 59px);
+    .personal {
+      height: 30vh;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        @include lg {
+          width: 90%;
+          height: 1px;
+          bottom: -25%;
+          left: 50%;
+          background-color: black;
+          transform: translate(-50%, -50%);
+        }
+      }
+      @include lg {
+        height: 20vh;
+      }
+    }
+  }
+  #cart {
+    min-height: calc(100vh - 59px);
+    .personal {
+      height: 30vh;
+      position: relative;
+      margin-bottom: 25px;
+      @include lg {
+        height: 20vh;
+      }
+    }
+    .flexItem {
+      display: flex;
+      align-items: center;
+      div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        img {
+          object-fit: cover;
+          max-width: 100%;
+          border-radius: 0.5rem;
+        }
+      }
+      @include md {
+        max-width: 200px;
+        display: table-cell;
+      }
+    }
+    .vs-input-number{
+      background: none;
+    }
+  }
+  #track{
+    min-height: calc(100vh - 59px);
+  }
+}
+
+#manager {
+  background: url("https://picsum.photos/1920/1080/?random=1") no-repeat fixed
+    center/cover;
+  .b-sidebar-outer {
+    position: sticky !important;
+    #sidebar {
+      position: sticky !important;
+      background-color: rgba(0, 0, 0, 0.8) !important;
+      text-align: center;
+      padding-top: 1rem;
+      .sidebar-item {
+        color: white;
+        font-size: 1rem;
+        width: 80%;
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+      }
+      .sidebar-item2 {
+        color: white;
+        font-size: 1rem;
+        width: 80%;
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        @include lg {
+          display: none;
+        }
+      }
+    }
+    .b-sidebar-backdrop {
+      position: absolute !important;
+      width: 100%;
+    }
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  #message {
+    height: calc(100vh - 59px);
+  }
+  #display {
+    min-height: calc(100vh - 59px);
+    .carditem {
+      &:first-child {
+        @include sm {
+          border-right: 10px solid rgba(0, 0, 0, 0.5);
+        }
+      }
+      &:last-child {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        @include sm {
+          padding: none;
+        }
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  #article {
+    height: calc(100vh - 59px);
+    .carditem {
+      &:first-child {
+        @include sm {
+          border-right: 10px solid rgba(0, 0, 0, 0.5);
+        }
+      }
+      &:last-child {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        @include sm {
+          padding: none;
+        }
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  #membership {
+    height: calc(100vh - 59px);
+  }
+  #order {
+    height: calc(100vh - 59px);
+    background-color: white;
+  }
+}
