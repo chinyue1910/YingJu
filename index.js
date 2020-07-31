@@ -23,11 +23,14 @@ app.use(cors({
       callback(null, true)
     } else {
       if (process.env.ALLOW_CORS === 'true') {
+        console.log('allow');
         callback(null, true)
       } else if (origin.includes('github')) {
         callback(null, true)
+        console.log('github');
       } else {
         callback(new Error('Not allow'), false)
+        console.log('notalow');
       }
     }
   },
