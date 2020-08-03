@@ -33,18 +33,23 @@
 </template>
 
 <script>
+import home1 from '../assets/images/home1.jpg'
+import home2 from '../assets/images/home2.jpg'
+import home3 from '../assets/images/home3.jpg'
+import home4 from '../assets/images/home4.jpg'
+import home5 from '../assets/images/home5.jpg'
 export default {
   data () {
     return {
       box: {
-        src: 'https://picsum.photos/1920/1080/?random=1',
+        src: home1,
         link: '/news',
         text: '最新消息',
         ishalf: true
       },
       boxs: [
         {
-          src: 'https://picsum.photos/1920/1080/?random=2',
+          src: home2,
           link: '/about',
           text: '菇菇故事',
           isdivide: true,
@@ -52,7 +57,7 @@ export default {
           isforth: true
         },
         {
-          src: 'https://picsum.photos/1920/1080/?random=3',
+          src: home3,
           link: '/product',
           text: '商品介紹',
           isdivide: true,
@@ -62,59 +67,61 @@ export default {
       ],
       box1s: [
         {
-          src: 'https://picsum.photos/1920/1080/?random=4',
+          src: home4,
           link: '/member/profile',
           text: '會員專區',
           isdivide: true
         },
         {
-          src: 'https://picsum.photos/1920/1080/?random=5',
+          src: home5,
           link: '/contact',
-          text: '聯絡我們',
+          text: '意見回饋',
           isdivide: true
         }
       ],
       show: false,
-      isShow: false,
-      change: true
+      isShow: false
     }
   },
   props: {
     fullwidth: Number
   },
   mounted () {
-    setTimeout(() => {
-      this.show = true
-    }, 1000)
-    setTimeout(() => {
-      this.isShow = true
-      this.change = false
-    }, 8000)
+    this.transform()
   },
-  watch: {
-    fullwidth () {
-      if (this.change) {
-        setTimeout(() => {
-          this.box.ishalf = !(this.fullwidth >= 768)
-        }, 4000)
-        setTimeout(() => {
-          this.boxs[0].isdivide = !(this.fullwidth >= 768)
-          this.boxs[1].isdivide = !(this.fullwidth >= 768)
-          this.boxs[0].isthird = !(this.fullwidth >= 768)
-          this.boxs[1].isthird = !(this.fullwidth >= 768)
-        }, 5000)
-        setTimeout(() => {
-          this.boxs[0].isforth = !(this.fullwidth >= 768)
-          this.boxs[1].isforth = !(this.fullwidth >= 768)
-          this.boxs[0].isthird = !this.boxs[0].isthird
-          this.boxs[1].isthird = !this.boxs[1].isthird
-        }, 6000)
-        setTimeout(() => {
-          this.box1s[0].isdivide = !(this.fullwidth >= 768)
-          this.box1s[1].isdivide = !(this.fullwidth >= 768)
-        }, 7000)
-      }
+  methods: {
+    transform () {
+      setTimeout(() => {
+        this.show = true
+      }, 1000)
+      setTimeout(() => {
+        this.isShow = true
+      }, 8000)
+      setTimeout(() => {
+        this.box.ishalf = !(this.fullwidth >= 768)
+      }, 4000)
+      setTimeout(() => {
+        this.boxs[0].isdivide = !(this.fullwidth >= 768)
+        this.boxs[1].isdivide = !(this.fullwidth >= 768)
+        this.boxs[0].isthird = !(this.fullwidth >= 768)
+        this.boxs[1].isthird = !(this.fullwidth >= 768)
+      }, 5000)
+      setTimeout(() => {
+        this.boxs[0].isforth = !(this.fullwidth >= 768)
+        this.boxs[1].isforth = !(this.fullwidth >= 768)
+        this.boxs[0].isthird = !this.boxs[0].isthird
+        this.boxs[1].isthird = !this.boxs[1].isthird
+      }, 6000)
+      setTimeout(() => {
+        this.box1s[0].isdivide = !(this.fullwidth >= 768)
+        this.box1s[1].isdivide = !(this.fullwidth >= 768)
+      }, 7000)
     }
+  },
+  created () {
+    this.$bus.$on('transform', msg => {
+      this.transform(msg)
+    })
   }
 }
 </script>

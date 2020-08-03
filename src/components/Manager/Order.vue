@@ -11,7 +11,7 @@
         empty-text="目前沒有任何訂單"
         :items='items'
         :fields='fields'
-        stacked='sm'
+        stacked='md'
         thead-tr-class="bg-info")
         template(v-slot:cell(order)="row")
           b-button(size="sm" @click="row.toggleDetails" variant="info").
@@ -19,7 +19,7 @@
         template(v-slot:cell(checkbox)="row")
           b-form-radio-group(:options='options' v-model="row.item.checkbox")
         template(v-slot:row-details="row")
-          b-table(:items="row.item.order" :fields="fields2" dark thead-tr-class="bg-danger")
+          b-table(:items="row.item.order" :fields="fields2" thead-tr-class="bg-secondary").bg-light
         template(v-slot:emptyfiltered="scope")
           h5.text-center.text-danger 目前沒有任何此選項的內容
 

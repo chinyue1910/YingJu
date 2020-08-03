@@ -1,11 +1,11 @@
 <template lang="pug">
-  #news
+  #news(:style="{background: `url(${img}) no-repeat fixed center/cover`}")
     b-container
       b-row.flex-column
         b-col(
           v-for="(box,index) in paginatedBoxs"
           :key="index"
-          :style="{maxWidth:'100%'}"
+          :style="{maxWidth:'100%',borderRadius:'1rem'}"
           @click="box.popupActivo =true"
           ).p-3.mb-3
           .d-flex.flex-wrap.justify-content-between
@@ -42,13 +42,15 @@
 </template>
 
 <script>
+import img from '../assets/images/news.jpg'
 export default {
   data () {
     return {
       boxs: [],
       paginatedBoxs: this.boxs,
       perPage: 5,
-      currentPage: 1
+      currentPage: 1,
+      img: img
     }
   },
   methods: {

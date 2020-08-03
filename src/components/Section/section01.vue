@@ -15,13 +15,16 @@
 </template>
 
 <script>
+import img1 from '../../assets/images/section1-1.jpg'
+import img2 from '../../assets/images/section1-2.jpg'
+import img3 from '../../assets/images/section1-3.jpg'
 export default {
   data () {
     return {
       imgs: [
-        { src: 'https://picsum.photos/1920/1080/?image=99' },
-        { src: 'https://picsum.photos/1920/1080/?image=11' },
-        { src: 'https://picsum.photos/1920/1080/?image=12' }
+        { src: img1 },
+        { src: img2 },
+        { src: img3 }
       ]
     }
   }

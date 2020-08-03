@@ -1,8 +1,8 @@
 <template lang="pug">
   #app
-    font-awesome-icon#bigNav(:icon=['fas','bars'] size="3x" color="rgba(0,0,0,0.3)" @click="showContent" v-if="opacity == 0" :style="{display:navshow}")
+    vs-icon#bigNav(icon="menu" @click="showContent" v-if="opacity == 0" :style="{display:navshow}")
     keep-alive
-      router-view(:style="{filter:`blur(${blur}px)`}" @changenavshow="changenavshow" @showContent="showContent" :fullwidth="fullwidth")
+      router-view(:style="{filter:`blur(${blur}px)`}" ref="childMethod" @changenavshow="changenavshow" @showContent="showContent" :fullwidth="fullwidth")
     navbarContent(
       :style="{opacity:opacity,visibility:visibility}"
       @closeContent='closeContent'
@@ -80,7 +80,7 @@ export default {
     this.heartbeat()
     setInterval(() => {
       this.heartbeat()
-    }, 1000 * 60 * 20)
+    }, 1000 * 5)
   },
   computed: {
     user () {

@@ -75,6 +75,7 @@ export default {
         .then(response => {
           const data = response.data
           if (data.success) {
+            this.$store.commit('logout')
             this.$swal({
               title: '登出成功',
               icon: 'success',
@@ -82,7 +83,6 @@ export default {
               confirmButtonText: '確定'
             }).then(result => {
               if (result.value || result.isDismissed) {
-                this.$store.commit('logout')
                 this.$router.push('/')
               }
             })

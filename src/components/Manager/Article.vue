@@ -1,8 +1,31 @@
 <template lang="pug">
   #article.bg-white
-    b-container
+    b-container.pt-5
       b-row
         b-form.w-100(@submit="submit").d-flex.flex-wrap.justify-content-center
+          b-col(cols="12").d-flex
+            b-col(cols="7").p-0
+              b-form-group(
+                label="標題"
+                label-for="title"
+                :state="state"
+              )
+                b-form-input(
+                  id="title"
+                  v-model="form.title"
+                  required
+                )
+            b-col(cols="5")
+              b-form-group(
+                label="類別"
+                label-for="type"
+              )
+                b-form-select(
+                  id="type"
+                  :options="options"
+                  v-model="form.select"
+                  required
+                )
           b-col(cols="6").py-3.d-flex.flex-wrap
             img-inputer.h-100.w-100(
               v-model='form.file'
@@ -14,29 +37,6 @@
               icon="img"
               :style="{maxWidth:'100%',minHeight:'150px'}")
           b-col(cols="6").d-flex.py-3.p-0.flex-wrap
-            b-col(cols="12").d-flex
-              b-col(cols="7").p-0
-                b-form-group(
-                  label="標題"
-                  label-for="title"
-                  :state="state"
-                )
-                  b-form-input(
-                    id="title"
-                    v-model="form.title"
-                    required
-                  )
-              b-col(cols="5")
-                b-form-group(
-                  label="類別"
-                  label-for="type"
-                )
-                  b-form-select(
-                    id="type"
-                    :options="options"
-                    v-model="form.select"
-                    required
-                  )
             b-col(cols="12")
               b-form-group(
                 label="內容詳情"
@@ -59,9 +59,9 @@
           :style="{maxWidth:'100%'}"
           ).p-3.mb-3
           .d-flex(:style="{border:'10px solid rgba(0,0,0,0.5)'}").flex-wrap.justify-content-between
-            b-col.carditem(cols="12" sm="4").px-0
+            b-col.carditem(cols="12" md="4").px-0
               b-img(:src="box.src")
-            b-col.carditem(cols="12" sm="7").d-flex.flex-column.justify-content-around
+            b-col.carditem(cols="12" md="7").d-flex.flex-column.justify-content-around
               vs-popup.holamundo(@close="bringback(box)" title="商品資訊" :active.sync='box.edit' button-close-hidden=true)
                 b-form(@submit.prevent="submitItem(box)").w-100.text-center
                   b-form-group(

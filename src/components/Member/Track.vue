@@ -4,8 +4,9 @@
       b-table(
         :items="items"
         :fields="fields"
-        stacked='sm'
+        stacked='md'
         show-empty
+        thead-tr-class="bg-info"
       )
         template(v-slot:cell(checkbox)="row")
           | {{ row.value === 'completed' ? '已送達' : row.value === 'sending' ? '寄送中' : '等待付款' }}
@@ -15,7 +16,7 @@
           b-button(size="sm" @click="row.toggleDetails" variant="info").
             {{ row.detailsShowing ? '隱藏' : '顯示' }}詳細資料
         template(v-slot:row-details="row")
-          b-table(:items="row.item.order" :fields="fields2" thead-tr-class="bg-danger").bg-light
+          b-table(:items="row.item.order" :fields="fields2" thead-tr-class="bg-secondary").bg-light
         template(v-slot:empty="scope")
           h4.text-center 目前還沒有任何訂單喔
 </template>
@@ -42,6 +43,9 @@ export default {
     this.axios.get(process.env.VUE_APP_APIURL + '/track/' + this.userID)
       .then(response => {
         this.items = response.data.result
+        for (const i of this.items) {
+          i._rowVariant = (i.checkbox === 'completed') ? 'dark' : 'info'
+        }
       })
   },
   computed: {

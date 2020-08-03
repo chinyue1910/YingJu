@@ -39,7 +39,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "contact" */ '../views/Contact.vue'),
     meta: {
       login: false,
-      title: '映筑香菇農場 | 聯絡我們'
+      title: '映筑香菇農場 | 意見回饋'
     }
   },
   {
@@ -189,13 +189,13 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.login) {
     if (store.state.user.userAccount.length === 0) {
       next('/login')
-    } else if (store.state.user.userAccount === 'manager@gmail.com' && to.meta.route !== 'Manager') {
+    } else if (store.state.user.userAccount === process.env.VUE_APP_MANAGER && to.meta.route !== 'Manager') {
       if (from.path === '/manager/order') {
         next()
       } else {
         next('/manager/order')
       }
-    } else if (store.state.user.userAccount !== 'manager@gmail.com' && to.meta.route === 'Manager') {
+    } else if (store.state.user.userAccount !== process.env.VUE_APP_MANAGER && to.meta.route === 'Manager') {
       next(from.path)
     } else {
       next()

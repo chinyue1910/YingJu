@@ -5,6 +5,7 @@
     Section03
     Section04
     Section05
+    Section06
 </template>
 
 <script>

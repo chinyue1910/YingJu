@@ -1,5 +1,5 @@
 <template lang="pug">
-  #login
+  #login(:style="{background: `url(${img}) no-repeat fixed center/cover`}")
     b-container(:style="{background: 'rgba(0,0,0,0.8)',borderRadius: '1rem'}").p-0.mx-1.mx-sm-auto
       b-row.align-items-center.justify-content-between.m-0
         b-col.pb-5.pb-lg-0.d-flex.flex-column.align-items-center(cols="12" lg="6")
@@ -19,7 +19,7 @@
                 v-model="form[item.id]"
               )
             b-btn(variant="success" type="submit").mt-3.p-1 登入
-            b-link.align-self-center.mt-3 Forgot Password？
+            b-link.align-self-center.mt-3 忘記密碼？
         b-col.pt-5.pt-lg-0(cols="12" lg="6").d-flex.flex-column.align-items-center
           b-btn(variant="primary").mb-3
             b-col(cols="2")
@@ -33,13 +33,15 @@
               | Login with Google
       .footer.text-center.p-3
         | Need an account?
-        b-link(to="/sign").ml-1 Sign up now!
+        b-link(to="/sign").ml-1 立即註冊!
 </template>
 
 <script>
+import img from '../assets/images/login.jpg'
 export default {
   data () {
     return {
+      img: img,
       form: {
         account: '',
         password: ''

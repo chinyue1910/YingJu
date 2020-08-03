@@ -3,7 +3,7 @@
     b-container
       b-row
         b-form.w-100(@submit="submit").d-flex.flex-wrap.justify-content-center
-          b-col(cols="12").d-flex.py-3.p-0
+          b-col(cols="12").py-3.p-0.d-lg-flex
             b-col(v-for="(box,index) in formdata" :key="index")
               b-form-group(
                 :label="box.label"
@@ -47,9 +47,9 @@
           :style="{maxWidth:'100%'}"
           ).p-3.mb-3
           .d-flex(:style="{border:'10px solid rgba(0,0,0,0.5)'}").flex-wrap
-            b-col.carditem(cols="12" lg="5").px-0
+            b-col.carditem(cols="12" md="5").px-0
               b-img(:src="box.src")
-            b-col.carditem(cols="12" lg="7").d-flex.flex-column.justify-content-around
+            b-col.carditem(cols="12" md="7").d-flex.flex-column.justify-content-around
               vs-popup.holamundo(@close="bringback(box)" title="商品資訊" :active.sync='box.edit' button-close-hidden=true)
                 b-form(@submit.prevent="submitItem(box)").w-100.text-center
                   b-form-group(

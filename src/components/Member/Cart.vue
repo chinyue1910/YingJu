@@ -15,17 +15,17 @@
           template(v-slot:cell(price)='row').
             {{ row.value }}
           template(v-slot:cell(count)='row')
-            vs-input-number(v-model="row.value" @input="show([$event,row.index])")
+            vs-input-number(v-model="row.value" @input="show([$event,row.item])" :max="row.item.max" min=0)
           template(v-slot:cell(total)='row').
             {{ row.item.price * row.item.count }}
           template(v-slot:cell(actions)='row')
             b-button(variant="danger" @click="remove(row.index)").ml-1 刪除
           template(v-slot:empty="scope")
             b-link(:style="{display:'block'}" to="/product").text-center 跟著我去逛逛其他商品吧
-      b-row.justify-content-center.m-0
+      b-row.justify-content-center.m-0.align-items-center
         h4.mb-0 購買總金額：
         h3.text-danger.mb-0 ${{ totalprice }}
-        b-btn(variant="warning" @click="popupActivo = true").ml-3 立即下訂
+        b-btn(variant="warning" @click="popupActivo = true" :disabled="totalprice === 0").ml-3 立即下訂
     vs-popup.holamundo(title='確認下訂' :active.sync='popupActivo' button-close-hidden=true)
       b-col(cols="12").text-center
         h3 您的訂單總金額為
@@ -62,7 +62,8 @@ export default {
             product: d.product,
             price: d.price,
             count: d.count,
-            id: d.id
+            id: d.id,
+            max: null
           }
         })
       })
@@ -89,9 +90,12 @@ export default {
   methods: {
     changeCart (msg) {
       this.items = msg
+      for (const i of this.items) {
+        i.max = null
+      }
     },
     show (data) {
-      this.items[data[1]].count = parseInt(data[0])
+      data[1].count = parseInt(data[0])
     },
     submit () {
       if (this.items.length === 0) {
@@ -125,11 +129,20 @@ export default {
           .catch(err => {
             this.popupActivo = false
             this.$swal({
-              title: err.response.data.message,
+              title: err.response.data.message.status,
               icon: 'error',
               confirmButtonColor: '#3085d6',
               confirmButtonText: '確定'
             })
+            if (err.response.data.message.status === '商品庫存不足') {
+              this.axios.get(process.env.VUE_APP_APIURL + '/product')
+                .then(response => {
+                  for (const i in this.items) {
+                    this.items[i].max = err.response.data.message.product[i].storage
+                    this.items[i].count = err.response.data.message.product[i].storage
+                  }
+                })
+            }
           })
       }
     },

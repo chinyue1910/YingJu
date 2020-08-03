@@ -1,6 +1,6 @@
 <template lang="pug">
   #product
-    b-container(fluid).h-50(:style="{background:'url(https://picsum.photos/1920/1080/?random=1) no-repeat center/cover'}")#header
+    b-container(fluid).h-50(:style="{background:`url(${uri}) no-repeat center/cover`}")#header
       h1.text-warning Choose Your Love
       svg(height="300%" :style="{transform:'rotate(0deg)',height:'50px'}" fill="white" width="100%" viewBox="0 0 1000 200" preserveAspectRatio="none")
         path(d="M0,0c0,0,152.324,200,500,200S1000,0,1000,0v200H0V0z")
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import background from '../assets/images/product.jpg'
 import { Hooper, Slide } from 'hooper'
 import 'hooper/dist/hooper.css'
 export default {
@@ -51,6 +52,7 @@ export default {
   },
   data () {
     return {
+      uri: background,
       boxs: [],
       hooperSettings: {
         infiniteScroll: true,

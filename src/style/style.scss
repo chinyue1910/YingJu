@@ -139,12 +139,15 @@ $width: 50px;
         }
       }
     }
-    svg {
+    .vs-icon {
       position: absolute;
       right: 3%;
       top: 3%;
       color: rgba(255, 255, 255, 0.5);
       cursor: pointer;
+    }
+    img{
+      height: 100px;
     }
   }
   #bigNav {
@@ -153,6 +156,12 @@ $width: 50px;
     top: 2%;
     z-index: 10;
     cursor: pointer;
+    font-size: 4rem;
+    color: rgba(0,0,0,0.5);
+    filter: drop-shadow(0 0 10px white);
+    &:hover{
+      color: black;
+    }
   }
 }
 
@@ -307,19 +316,18 @@ $width: 50px;
 
 #about {
   section {
-    @include sm {
-      h4 {
+    h4 {
+      @include sm {
         font-size: fonSize(2);
       }
-    }
-    @include md {
-      h4 {
-        font-size: fonSize(3);
+      @include md {
+          font-size: fonSize(2.5);
       }
-    }
-    @include xl {
-      h4 {
-        font-size: fonSize(4);
+      @include lg {
+          font-size: fonSize(3);
+      }
+      @include xl {
+          font-size: fonSize(3.5);
       }
     }
     &:nth-child(1) {
@@ -337,14 +345,11 @@ $width: 50px;
       }
     }
     &:nth-child(3) {
-      color: black;
-      text-shadow: 0 0 5px white;
+      color: white;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      background: url(https://picsum.photos/1920/1080/?random=70) no-repeat
-        fixed center/cover;
       .particle {
         padding: 1rem 0 1rem 0;
         text-align: center;
@@ -391,8 +396,8 @@ $width: 50px;
         }
         img {
           object-fit: cover;
-          max-width: 100%;
           border-radius: 5px;
+          max-height: 250px;
         }
       }
     }
@@ -485,13 +490,20 @@ $width: 50px;
   padding-top: 4rem;
   img {
     object-fit: cover;
-    max-width: 100%;
+    max-width: 75%;
+  }
+  position: relative;
+  .footer{
+    position: absolute;
+    bottom: 0;
+    background-color: black;
   }
 }
 
 #news {
   padding-top: 5rem;
   transition: 1s;
+  height: 100vh;
   .carditem {
     &:last-child {
       padding-top: 1rem;
@@ -513,9 +525,12 @@ $width: 50px;
   .col{
     transition: 0.5s;
     box-shadow: 0px 0px 5px black;
+    background-color: rgba(255,255,255,0.8);
+    cursor: pointer;
     &:hover{
       transform: translateY(-10px);
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      background-color: rgba(255,255,255,1);
     }
   }
 }
@@ -618,9 +633,9 @@ $width: 50px;
     color: white;
     width: 90%;
     position: relative;
-    @include lg {
-      width: 50%;
-    }
+    // @include lg {
+    //   width: 50%;
+    // }
   }
   .logo {
     position: absolute;
@@ -866,7 +881,7 @@ $width: 50px;
     min-height: calc(100vh - 59px);
     .carditem {
       &:first-child {
-        @include sm {
+        @include md {
           border-right: 10px solid rgba(0, 0, 0, 0.5);
         }
       }
@@ -879,7 +894,10 @@ $width: 50px;
       }
       img {
         width: 100%;
-        height: 100%;
+        height: 180px;
+        @include sm{
+          height: 294px;
+        }
       }
     }
     img{
@@ -891,7 +909,7 @@ $width: 50px;
     height: calc(100vh - 59px);
     .carditem {
       &:first-child {
-        @include sm {
+        @include md {
           border-right: 10px solid rgba(0, 0, 0, 0.5);
         }
       }
@@ -904,7 +922,10 @@ $width: 50px;
       }
       img {
         width: 100%;
-        height: 100%;
+        height: 180px;
+        @include sm{
+          height: 294px;
+        }
       }
     }
     img{

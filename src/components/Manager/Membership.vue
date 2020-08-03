@@ -8,7 +8,7 @@
         stacked='md'
         :items='users'
         :fields='fields'
-        thead-tr-class="bg-dark text-white")
+        thead-tr-class="bg-info")
 </template>
 
 <script>

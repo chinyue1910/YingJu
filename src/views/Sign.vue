@@ -1,5 +1,5 @@
 <template lang="pug">
-  #sign
+  #sign(:style="{background: `url(${img}) no-repeat fixed center/cover`}")
     b-container.d-flex.justify-content-center
       b-row.flex-column.align-items-center(:style="{background: 'rgba(0,0,0,0.8)',borderRadius: '1rem'}")
         font-awesome-icon.logo(:icon=['fas','user-circle'] size="5x" color="white")
@@ -20,13 +20,25 @@
             )
             b-form-invalid-feedback(:state='item.state')
               | {{ item.feedback }}
-          b-btn(variant="success" type="submit" :disabled="disabled").mt-3 註冊
+          b-row.py-0.m-0.w-100
+            vue-recaptcha#verify(
+              sitekey=process.env.VUE_APP_SITEKEY
+              :loadRecaptchaScript="true"
+              @verify="onCaptchaVerify"
+              @expired="onCaptchaExpired"
+              ref="recaptcha"
+            ).mr-auto
+            b-btn(variant="success" type="submit" :disabled="disabled").mt-3 註冊
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha'
+import img from '../assets/images/sign.jpg'
 export default {
+  components: { VueRecaptcha },
   data () {
     return {
+      img: img,
       disabled: false,
       passwordconfirm: '',
       inputs: [
@@ -45,7 +57,8 @@ export default {
         {
           label: '手機', id: 'tel', type: 'tel', placeholder: '請輸入手機號碼', state: null, feedback: '手機號碼格式錯誤', model: ''
         }
-      ]
+      ],
+      captcha: ''
     }
   },
   watch: {
@@ -72,8 +85,11 @@ export default {
               icon: 'success',
               confirmButtonColor: '#3085d6',
               confirmButtonText: '確定'
+            }).then(result => {
+              if (result.value || result.isDismissed) {
+                this.$router.push('/login')
+              }
             })
-            this.$router.push('/login')
           } else {
             this.$swal({
               title: data.message,
@@ -94,6 +110,12 @@ export default {
             confirmButtonText: '確定'
           })
         })
+    },
+    onCaptchaVerify (response) {
+      this.captcha = response
+    },
+    onCaptchaExpired () {
+      this.captcha = ''
     }
   },
   computed: {
@@ -104,7 +126,8 @@ export default {
         passwordconfirm: this.inputs[2].model,
         name: this.inputs[3].model,
         tel: this.inputs[4].model,
-        address: '尚未有地址'
+        address: '尚未有地址',
+        captcha: this.captcha
       }
     }
   }

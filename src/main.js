@@ -22,7 +22,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBahai, faBars, faTimes, faAngleDoubleRight, faAngleDoubleLeft, faShoppingCart, faCartPlus, faAngleRight, faAngleLeft, faUserCircle, faUser } from '@fortawesome/free-solid-svg-icons'
 
-import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { faFacebookF, faGoogle, faLine } from '@fortawesome/free-brands-svg-icons'
 
 import 'material-icons/iconfont/material-icons.css'
 
@@ -35,7 +35,7 @@ import 'vue-img-inputer/dist/index.css'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 
-library.add(faBahai, faBars, faTimes, faAngleDoubleRight, faAngleDoubleLeft, faShoppingCart, faCartPlus, faAngleRight, faAngleLeft, faUserCircle, faFacebookF, faGoogle, faUser)
+library.add(faBahai, faBars, faTimes, faAngleDoubleRight, faAngleDoubleLeft, faShoppingCart, faCartPlus, faAngleRight, faAngleLeft, faUserCircle, faFacebookF, faGoogle, faUser, faLine)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

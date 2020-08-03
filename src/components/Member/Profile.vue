@@ -17,6 +17,7 @@
             placeholder="請選擇或拖曳圖片至此"
             icon="img"
             @onChange="upload"
+            @onExceed="exceed"
             :style="{maxWidth:'30vh',minHeight:'30vh',height:'30vh',borderRadius:'50%',overflow:'hidden'}")
         b-col.size(xl="8")
           vs-popup.holamundo(title="個人資訊" :active.sync='edit' button-close-hidden=true @close="bringback")
@@ -54,6 +55,13 @@ export default {
     }
   },
   methods: {
+    exceed () {
+      this.$vs.notify({
+        title: '檔案大小不能超過 1 MB',
+        color: 'danger',
+        icon: 'close'
+      })
+    },
     upload () {
       if (this.file === null || this.file.size >= 1024 * 1024 || !this.file.type.includes('image')) {
         this.$vs.notify({

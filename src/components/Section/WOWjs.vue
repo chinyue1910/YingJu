@@ -1,5 +1,5 @@
 <template lang="pug">
-  u-animate-container(:style="{height:'100%'}").d-flex.align-items-center
+  u-animate-container(:style="{height:'100%'}").d-flex.align-items-center.justify-content-center
     u-animate(
       :name='name'
       delay='0s'
