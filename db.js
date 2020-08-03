@@ -11,7 +11,7 @@ mongoose.set('useNewUrlParser', true)
 mongoose.set('useFindAndModify', false)
 
 const Schema = mongoose.Schema
-mongoose.connect(process.env.DBURL)
+mongoose.connect(process.env.DBURL, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.plugin(beautifyUnique)
 
 const userSchema = new Schema({

@@ -10,6 +10,8 @@ import db from './db.js'
 import path from 'path'
 import FTPStorage from 'multer-ftp'
 import fs from 'fs'
+import axios from 'axios'
+import Client from 'ftp'
 
 dotenv.config()
 
@@ -23,14 +25,11 @@ app.use(cors({
       callback(null, true)
     } else {
       if (process.env.ALLOW_CORS === 'true') {
-        console.log('allow');
         callback(null, true)
       } else if (origin.includes('github')) {
         callback(null, true)
-        console.log('github');
       } else {
         callback(new Error('Not allow'), false)
-        console.log('notalow');
       }
     }
   },
@@ -100,6 +99,10 @@ app.post('/users', async (req, res) => {
     return
   }
   try {
+    const response = await axios.get('https://www.google.com/recaptcha/api/siteverify?secret=6Lcp4LgZAAAAAAubwgtu4ub5wJFe5OAt7Du2sV7Z&response=' + req.body.captcha)
+    if (!response.data.success) {
+      throw new Error('媽的你亂來')
+    }
     await db.users.create({
       account: req.body.account,
       password: md5(req.body.password),
@@ -109,7 +112,11 @@ app.post('/users', async (req, res) => {
     })
     res.send({ success: true, message: '' })
   } catch (error) {
-    if (error.name === 'ValidationError') {
+    if (
+      error.message === '媽的你亂來'
+    ) {
+      res.status(401).send({ success: false, message: '你是機器人' })
+    } else if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]
       const message = error.errors[key].message
       res.status(400).send({ success: false, message })
@@ -182,23 +189,20 @@ app.post('/profile/image/:id', async (req, res) => {
     } else {
       try {
         let src = ''
-        let path = ''
         if (process.env.FTP === 'true') {
           src = path.basename(req.file.path)
         } else {
           src = req.file.filename
         }
         const result = await db.users.findByIdAndUpdate(req.params.id, { src: src })
-        if (process.env.FTP === 'true') {
-          path = 'http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + result.src
-        } else {
-          path = process.cwd() + '/images/' + result.src
-        }
-        if (fs.existsSync(path)) {
-          fs.unlink(path, err => {
+        const c = new Client()
+        c.on('ready', function () {
+          c.delete(result.src, err => {
             if (err) console.log(err)
+            c.end()
           })
-        }
+        })
+        c.connect({ host: process.env.FTP_HOST, user: process.env.FTP_USER, password: process.env.FTP_PASSWORD })
         const resultnew = await db.users.findByIdAndUpdate(req.params.id, { src: src }, { new: true })
         res.send({ success: true, message: '', resultnew })
       } catch (error) {
@@ -210,7 +214,7 @@ app.post('/profile/image/:id', async (req, res) => {
           res.status(400).send({ success: false, message })
         } else {
           res.status(500).send({ success: false, message: '伺服器錯誤' })
-          console.log(error.msg)
+          console.log(error)
         }
       }
     }
@@ -444,15 +448,14 @@ app.delete('/product/:id', async (req, res) => {
   }
   try {
     const result = await db.products.findByIdAndRemove(req.params.id)
-    let path = ''
-    if (process.env.FTP === 'false') {
-      path = process.cwd() + '/images/' + result.name
-    } else {
-      path = 'http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + result.name
-    }
-    fs.unlink(path, err => {
-      if (err) console.log(err)
+    const c = new Client()
+    c.on('ready', function () {
+      c.delete(result.name, err => {
+        if (err) console.log(err)
+        c.end()
+      })
     })
+    c.connect({ host: process.env.FTP_HOST, user: process.env.FTP_USER, password: process.env.FTP_PASSWORD })
     res.send({ success: true, message: '' })
   } catch (error) {
     // ID 格式不是 MongoDB 的格式
@@ -543,8 +546,27 @@ app.post('/order/:id', async (req, res) => {
     return
   }
   try {
-    console.log(req.body)
     const userdetail = await db.users.findById(req.params.id)
+    const productdetail = await db.products.find()
+    class MyError extends Error {
+      constructor (status, product) {
+        super(status, product)
+        this.status = status
+        this.product = product
+      }
+    }
+    const errorproduct = []
+    let haserror = false
+    for (const i of req.body.slice(0, req.body.length - 2)) {
+      const product = productdetail.filter(d => {
+        return d.item === i.product
+      })
+      if (i.count > product[0].storage) {
+        haserror = true
+      }
+      errorproduct.push(product[0])
+    }
+    if (haserror) { throw new MyError('商品庫存不足', errorproduct) }
     const result = await db.orders.create({
       name: userdetail.name,
       tel: userdetail.tel,
@@ -562,7 +584,9 @@ app.post('/order/:id', async (req, res) => {
     }
     res.send({ success: true, message: '', result })
   } catch (error) {
-    if (error.name === 'CastError') {
+    if (error.message === '商品庫存不足') {
+      res.status(401).send({ success: false, message: error })
+    } else if (error.name === 'CastError') {
       res.status(400).send({ success: false, message: 'ID 格式錯誤' })
     } else if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]
@@ -772,15 +796,14 @@ app.delete('/article/:id', async (req, res) => {
   }
   try {
     const result = await db.news.findByIdAndRemove(req.params.id)
-    let path = ''
-    if (process.env.FTP === 'false') {
-      path = process.cwd() + '/images/' + result.name
-    } else {
-      path = 'http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + result.name
-    }
-    fs.unlink(path, err => {
-      if (err) console.log(err)
+    const c = new Client()
+    c.on('ready', function () {
+      c.delete(result.name, err => {
+        if (err) console.log(err)
+        c.end()
+      })
     })
+    c.connect({ host: process.env.FTP_HOST, user: process.env.FTP_USER, password: process.env.FTP_PASSWORD })
     res.send({ success: true, message: '' })
   } catch (error) {
     // ID 格式不是 MongoDB 的格式
