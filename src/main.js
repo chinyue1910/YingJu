@@ -16,8 +16,6 @@ import animated from 'animate.css'
 
 import VueAgile from 'vue-agile'
 
-import VueWow from 'vue-wow'
-
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBahai, faBars, faTimes, faAngleDoubleRight, faAngleDoubleLeft, faShoppingCart, faCartPlus, faAngleRight, faAngleLeft, faUserCircle, faUser } from '@fortawesome/free-solid-svg-icons'
@@ -44,8 +42,6 @@ Vue.component('ImgInputer', ImgInputer)
 Vue.use(animated)
 
 Vue.use(VueAgile)
-
-Vue.use(VueWow)
 
 Vue.use(Vuesax)
 

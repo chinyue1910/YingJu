@@ -42,7 +42,7 @@ b-navbar.py-0(toggleable="lg", type="dark", variant="dark", sticky)
       b-nav-item(@click="logout")
         vs-icon.mr-2(icon="exit_to_app", size="1.5rem")
         | 登出
-      b-nav-item(to="/member/profile")
+      b-nav-item
         | {{ username }} 你好
 </template>
 

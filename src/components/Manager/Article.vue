@@ -1,10 +1,10 @@
 <template lang="pug">
   #article.bg-white
-    b-container.pt-5
+    b-container.pt-3
       b-row
         b-form.w-100(@submit="submit").d-flex.flex-wrap.justify-content-center
-          b-col(cols="12").d-flex
-            b-col(cols="7").p-0
+          b-col(cols="12").d-lg-flex
+            b-col
               b-form-group(
                 label="標題"
                 label-for="title"
@@ -15,7 +15,7 @@
                   v-model="form.title"
                   required
                 )
-            b-col(cols="5")
+            b-col
               b-form-group(
                 label="類別"
                 label-for="type"
@@ -26,22 +26,22 @@
                   v-model="form.select"
                   required
                 )
-          b-col(cols="6").py-3.d-flex.flex-wrap
-            img-inputer.h-100.w-100(
-              v-model='form.file'
-              no-mask=true
-              theme='light'
-              accept="image/*"
-              :max-size="1024"
-              placeholder="請選擇或拖曳圖片至此"
-              icon="img"
-              :style="{maxWidth:'100%',minHeight:'150px'}")
-          b-col(cols="6").d-flex.py-3.p-0.flex-wrap
-            b-col(cols="12")
+          b-col(cols="12").py-3.d-flex.flex-wrap
+            b-col(cols="12" sm="6").py-3
+              img-inputer.h-100.w-100(
+                v-model='form.file'
+                no-mask=true
+                theme='light'
+                accept="image/*"
+                :max-size="1024"
+                placeholder="請選擇或拖曳圖片至此"
+                icon="img"
+                :style="{maxWidth:'100%',minHeight:'150px'}")
+            b-col(cols="12" sm="6")
               b-form-group(
                 label="內容詳情"
                 label-for="description"
-              ).m-0
+              )
                 b-form-textarea(
                   id="description"
                   v-model="form.text"

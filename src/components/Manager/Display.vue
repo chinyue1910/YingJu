@@ -1,9 +1,9 @@
 <template lang="pug">
   #display.bg-white
-    b-container
+    b-container.pt-3
       b-row
         b-form.w-100(@submit="submit").d-flex.flex-wrap.justify-content-center
-          b-col(cols="12").py-3.p-0.d-lg-flex
+          b-col(cols="12").d-lg-flex
             b-col(v-for="(box,index) in formdata" :key="index")
               b-form-group(
                 :label="box.label"
@@ -15,7 +15,7 @@
                   v-model="box.text"
                   required
                 )
-          b-col(cols="12").py-3.px-0.d-flex.flex-wrap
+          b-col(cols="12").py-3.d-flex.flex-wrap
             b-col(cols="12" sm="6").py-3
               img-inputer.h-100.w-100(
                 v-model='file'

@@ -139,7 +139,7 @@ export default {
                 .then(response => {
                   for (const i in this.items) {
                     this.items[i].max = err.response.data.message.product[i].storage
-                    this.items[i].count = err.response.data.message.product[i].storage
+                    this.items[i].count = (this.items[i].count > err.response.data.message.product[i].storage) ? err.response.data.message.product[i].storage : this.items[i].count
                   }
                 })
             }

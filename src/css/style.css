@@ -475,6 +475,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  overflow-x: hidden;
 }
 
 #about section:nth-child(5) .h-card:nth-child(even) {
@@ -776,20 +777,27 @@
 
 #sign {
   background: url("https://picsum.photos/1920/1080/?random=1") no-repeat fixed center/cover;
-  height: 100vh;
+  min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding-top: 50px;
 }
 
 #sign .row {
-  padding: 5rem 0 1rem 0;
+  padding: 1rem 0 1rem 0;
   color: white;
   width: 90%;
   position: relative;
+}
+
+@media (min-width: 768px) {
+  #sign .row {
+    padding: 5rem 0 1rem 0;
+  }
 }
 
 #sign .logo {
@@ -797,10 +805,17 @@
   top: 0;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   background-color: black;
   border-radius: 50%;
+}
+
+@media (min-width: 768px) {
+  #sign .logo {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 #sign form {
@@ -841,6 +856,31 @@
 
 #sign form .invalid-feedback {
   font-size: 1rem;
+}
+
+#sign #verify {
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+}
+
+@media (min-width: 768px) {
+  #sign #verify {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    margin-right: auto;
+  }
+}
+
+#sign .signbtn {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  #sign .signbtn {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
 }
 
 #member {
@@ -1061,10 +1101,10 @@
 }
 
 #member #cart .flexItem div img {
-  -o-object-fit: cover;
-     object-fit: cover;
+  width: 200px;
   max-width: 100%;
   border-radius: 0.5rem;
+  height: 100px;
 }
 
 @media (min-width: 768px) {
@@ -1202,7 +1242,7 @@
 }
 
 #manager #article {
-  height: calc(100vh - 59px);
+  min-height: calc(100vh - 59px);
 }
 
 @media (min-width: 768px) {

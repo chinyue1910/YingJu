@@ -40,7 +40,7 @@
           b-row.py-3
             b-col.text-success.text-center {{ (boxs.email === undefined) ? "" :boxs.email.label }}
             b-col {{ (boxs.email === undefined) ? "" :boxs.email.initial }}
-          b-row.justify-content-center
+          b-row.justify-content-center.mt-5
             b-button(variant="primary" @click="edit=true") 更改資料
 </template>
 

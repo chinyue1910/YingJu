@@ -1,6 +1,6 @@
 <template lang="pug">
   #message.bg-white
-    b-container.pt-5
+    b-container.pt-5(fluid)
       b-table(
         show-empty
         striped

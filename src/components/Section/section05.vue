@@ -5,17 +5,29 @@
     h4.py-3 香菇的出生
     b-container
       b-row.h-card(v-for="(box,index) in boxs" :key="index").py-3
-        b-col(cols="12" md="6")
-          wow(:index="index+1")
-            b-img(thumbnail :src="box.src")
-        b-col.d-flex.align-items-center(cols="12" md="6")
-          wow(:index="index" :style="{fontSize:'1.2rem'}").px-3 {{ box.text }}
+        b-col.text-center(
+          cols="12"
+          md="6"
+          :data-aos="animate(index)"
+          data-aos-offset="200"
+          data-aos-duration="1000"
+          )
+          b-img(thumbnail :src="box.src")
+        b-col.d-flex.align-items-center.px-5(
+          cols="12"
+          md="6"
+          :data-aos="animate(index+1)"
+          data-aos-offset="200"
+          data-aos-duration="1000"
+        )
+          h5.mb-0.py-3 {{ box.text }}
     svg(height="100%" :style="{transform:'rotate(0deg)',height:'50px'}" fill="#52453c" width="100%" viewBox="0 0 1000 100" preserveAspectRatio="none")
       path(d="M500.2,94.7L0,0v100h1000V0L500.2,94.7z")
 </template>
 
 <script>
-import wow from './WOWjs'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import img1 from '../../assets/images/section5-1.jpg'
 import img2 from '../../assets/images/section5-2.jpg'
 import img3 from '../../assets/images/section5-3.jpg'
@@ -26,10 +38,8 @@ import img7 from '../../assets/images/section5-7.jpg'
 import img8 from '../../assets/images/section5-8.jpg'
 import img9 from '../../assets/images/section5-9.jpg'
 import img10 from '../../assets/images/section5-10.jpg'
+AOS.init()
 export default {
-  components: {
-    wow
-  },
   data () {
     return {
       boxs: [
@@ -74,6 +84,11 @@ export default {
           text: '烤好後要一盤一盤純手工眼力篩選香菇，把不漂亮或破裂的香菇一顆一顆篩選出，菇農兩天一夜的賣力工作，終於完成了乾香菇的製作'
         }
       ]
+    }
+  },
+  methods: {
+    animate (index) {
+      return (index % 2 === 0) ? 'fade-right' : 'fade-left'
     }
   }
 }

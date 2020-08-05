@@ -38,7 +38,7 @@
     b-container(fluid).footer.text-light
       b-row.py-3
         b-col(cols="12" md="6" xl="3").d-flex.align-items-center.justify-content-lg-center.pt-1
-          h6.mb-0 Copyright &copy; 2020 映筑香菇農場 版權所有
+          h6.mb-0 Copyright &copy; 2020 映筑香菇農場 圖片取自網路
         b-col(cols="12" md="6" xl="3").d-flex.align-items-center.justify-content-lg-center.pt-1
           vs-icon(icon="local_phone").mr-1
           h6.mb-0 連絡電話：0981-799-090

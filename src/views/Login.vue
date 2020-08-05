@@ -19,7 +19,7 @@
                 v-model="form[item.id]"
               )
             b-btn(variant="success" type="submit").mt-3.p-1 登入
-            b-link.align-self-center.mt-3 忘記密碼？
+            b-link.align-self-center.mt-3(@click="getpassword") 忘記密碼？
         b-col.pt-5.pt-lg-0(cols="12" lg="6").d-flex.flex-column.align-items-center
           b-btn(variant="primary").mb-3
             b-col(cols="2")
@@ -31,9 +31,26 @@
               font-awesome-icon(:icon=['fab','google'] size="1x")
             b-col(cols="10")
               | Login with Google
-      .footer.text-center.p-3
+      .footer.text-center.py-3
         | Need an account?
         b-link(to="/sign").ml-1 立即註冊!
+    vs-popup(title="忘記密碼" :active.sync='edit' button-close-hidden=true @close="bringBack")
+      b-form(@submit.prevent="submitEmail").w-100.text-center
+        b-form-group(
+          label="請輸入註冊時的 E-Mail"
+          label-for="forgot"
+        )
+          b-form-input(
+            id="forgot"
+            v-model="forgot"
+            required
+            type="email"
+          )
+        b-row.m-0.justify-content-center
+          b-button(variant="success" type="submit").mr-1 送出
+          b-button(variant="danger" @click="cancel").ml-1 取消
+      vs-popup(title="提醒" :active.sync='edit2' button-close-hidden=true @close="edit=false")
+        h4 新的密碼已送出，請登入後立即更改密碼以保護你的隱私
 </template>
 
 <script>
@@ -53,7 +70,10 @@ export default {
         {
           label: '密碼', id: 'password', type: 'password', placeholder: '請輸入密碼'
         }
-      ]
+      ],
+      edit: false,
+      edit2: false,
+      forgot: ''
     }
   },
   methods: {
@@ -86,6 +106,33 @@ export default {
           this.form.password = ''
         })
         .catch(error => {
+          this.$swal({
+            title: error.response.data.message,
+            icon: 'error',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '確定'
+          })
+        })
+    },
+    getpassword () {
+      this.edit = true
+    },
+    cancel () {
+      this.edit = false
+      this.forgot = ''
+    },
+    bringBack () {
+      this.forgot = ''
+    },
+    async submitEmail () {
+      this.axios.post(process.env.VUE_APP_APIURL + '/send', { email: this.forgot })
+        .then(response => {
+          if (response.data.success) {
+            this.edit2 = true
+          }
+        })
+        .catch(error => {
+          this.edit = false
           this.$swal({
             title: error.response.data.message,
             icon: 'error',

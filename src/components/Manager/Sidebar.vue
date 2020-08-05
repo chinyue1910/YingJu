@@ -1,6 +1,6 @@
 <template lang="pug">
   b-sidebar#sidebar(shadow no-header :visible="visible" no-close-on-route-change :backdrop="backdrop" @hidden="$emit('sidebarclose')")
-    b-avatar(size="100px" src="https://picsum.photos/1920/1080/?random=2" to="/member/profile")
+    b-avatar(size="100px" :src="img" to="/member/profile")
     .sidebar-item(v-for="(item,index) in sidebarItems" @click="itemclick(item.link)")
       vs-icon(:icon="item.icon" size="2rem").mx-5
       | {{ item.text }}
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import img from '../../assets/images/logo.png'
 export default {
   props: {
     visible: Boolean,
@@ -30,7 +31,8 @@ export default {
       sidebarItems2: [
         { icon: 'help', text: '幫助中心' },
         { icon: 'exit_to_app', text: '登出' }
-      ]
+      ],
+      img: img
     }
   },
   computed: {

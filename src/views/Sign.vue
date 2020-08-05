@@ -27,8 +27,9 @@
               @verify="onCaptchaVerify"
               @expired="onCaptchaExpired"
               ref="recaptcha"
-            ).mr-auto
-            b-btn(variant="success" type="submit" :disabled="disabled").mt-3 註冊
+              :style="{transform:`scale(${recaptcha})`}"
+            )
+            b-btn(variant="success" type="submit" :disabled="disabled").signbtn 註冊
 </template>
 
 <script>
@@ -36,6 +37,9 @@ import VueRecaptcha from 'vue-recaptcha'
 import img from '../assets/images/sign.jpg'
 export default {
   components: { VueRecaptcha },
+  props: {
+    fullwidth: Number
+  },
   data () {
     return {
       img: img,
@@ -109,6 +113,7 @@ export default {
             confirmButtonColor: '#3085d6',
             confirmButtonText: '確定'
           })
+          this.captcha = ''
         })
     },
     onCaptchaVerify (response) {
@@ -129,6 +134,9 @@ export default {
         address: '尚未有地址',
         captcha: this.captcha
       }
+    },
+    recaptcha () {
+      return (this.fullwidth < 768) ? this.fullwidth / 485 : 1
     }
   }
 }
