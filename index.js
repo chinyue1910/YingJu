@@ -12,6 +12,7 @@ import FTPStorage from 'multer-ftp'
 import fs from 'fs'
 import axios from 'axios'
 import Client from 'ftp'
+import nodemailer from 'nodemailer'
 
 dotenv.config()
 
@@ -261,10 +262,31 @@ app.get('/membership', async (req, res) => {
     const resultNew = result.filter(user =>
       user.name !== process.env.MANAGER_NAME
     )
-    console.log(resultNew)
     res.send({ success: true, message: '', resultNew })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
+  }
+})
+
+app.delete('/membership/:id', async (req, res) => {
+  if (req.session.user !== process.env.MANAGER_NAME) {
+    res.status(401).send({ success: false, message: '無權限' })
+    return
+  }
+  try {
+    await db.users.findByIdAndRemove(req.params.id)
+    res.send({ success: true, message: '' })
+  } catch (error) {
+    if (error.name === 'CastError') {
+      res.status(400).send({ success: false, message: 'ID 格式錯誤' })
+    } else if (error.name === 'ValidationError') {
+      const key = Object.keys(error.errors)[0]
+      const message = error.errors[key].message
+      res.status(400).send({ success: false, message })
+    } else {
+      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      console.log(error)
+    }
   }
 })
 
@@ -870,6 +892,46 @@ app.patch('/message', async (req, res) => {
     } else {
       console.log(error)
       res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+  }
+})
+
+// 忘記密碼
+app.post('/send', async (req, res) => {
+  try {
+    const result = await db.users.find({ account: req.body.email })
+    if (result.length === 0) {
+      throw new Error('Not Exist')
+    }
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_ACCOUNT,
+        pass: process.env.GMAIL_PASSWORD
+      },
+      tls: {
+        rejectUnauthorized: false
+      }
+    })
+
+    const validation = Math.floor(Math.random() * 100000000).toString()
+
+    // send mail with defined transport object
+    const info = await transporter.sendMail({
+      from: '"映筑香菇農場"<zxc874631@gmail.com>', // sender address
+      to: req.body.email, // list of receivers
+      subject: '重設密碼', // Subject line
+      html: `<b>你的新密碼為 ${validation} </b><p>請盡速至會員專區修改密碼以保護你的隱私</p>` // html body
+    })
+
+    await db.users.updateOne({ account: req.body.email }, { password: md5(validation) })
+
+    console.log('Message sent: %s', info.messageId)
+    // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+    res.send({ success: true, message: '' })
+  } catch (error) {
+    if (error.message === 'Not Exist') {
+      res.status(401).send({ success: false, message: '此帳號不存在' })
     }
   }
 })
