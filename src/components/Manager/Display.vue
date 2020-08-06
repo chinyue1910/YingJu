@@ -83,7 +83,7 @@
                 b-col {{ item.detail }}
               b-row.py-3.mx-3
                 b-col.text-success(:style="{flex:'0 0 80px'}") {{ box.description.label }}
-                b-col.text-break {{ box.description.detail }}
+                b-col.text-break {{ box.description.detail.substr(0,100) }}
               b-row.justify-content-center
                 b-button(variant="primary" @click="edit(box)") 更改資料
                 b-button.ml-3(variant="danger" @click="deleteitem(index)") 刪除商品

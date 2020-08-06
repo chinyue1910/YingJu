@@ -1,9 +1,15 @@
-@charset "UTF-8";
+@font-face {
+  font-family: "FZCYJ";
+  src: url("../common/font/JasonHandwriting1-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: "微軟正黑體";
+  font-family: "FZCYJ";
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -605,7 +611,7 @@
   padding-top: 5rem;
   -webkit-transition: 1s;
   transition: 1s;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 #news .carditem:last-child {
@@ -620,7 +626,7 @@
 
 #news .carditem img {
   width: 100%;
-  height: 100%;
+  height: 200px;
 }
 
 #news #sort {
@@ -646,6 +652,11 @@
   -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   background-color: white;
+}
+
+#news nav ul {
+  margin-bottom: 0;
+  padding-bottom: 2rem;
 }
 
 #login {
@@ -750,24 +761,24 @@
 #login .footer {
   max-width: 50%;
   margin: auto;
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   color: white;
 }
 
 @media (min-width: 768px) {
   #login .footer {
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 }
 
 #login a {
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   text-decoration: underline;
 }
 
 @media (min-width: 768px) {
   #login a {
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -1232,7 +1243,7 @@
 
 @media (min-width: 576px) {
   #manager #display .carditem img {
-    height: 294px;
+    height: 370px;
   }
 }
 

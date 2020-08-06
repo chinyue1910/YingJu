@@ -18,8 +18,8 @@
                 h6.mr-auto {{ box.time }}
                 h6 {{ box.tag }}
             vs-popup.holamundo(:title='box.tag' :active.sync='box.popupActivo' button-close-hidden=true)
-              b-col(cols="12")
-                img(:src="box.src")
+              b-col(cols="12").d-flex.justify-content-center
+                img(:src="box.src" :style="{minWidth:'90%'}")
               b-col(cols="12").p-3
                 h1.text-success.text-center {{ box.title }}
               b-col(cols="12")
@@ -48,7 +48,7 @@ export default {
     return {
       boxs: [],
       paginatedBoxs: this.boxs,
-      perPage: 5,
+      perPage: 4,
       currentPage: 1,
       img: img
     }
