@@ -792,6 +792,9 @@ $width: 50px;
         height: 20vh;
       }
     }
+    @include xl{
+      height: calc(100vh - 59px);
+    }
   }
   #privacy {
     height: calc(100vh - 59px);

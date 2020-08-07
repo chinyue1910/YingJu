@@ -1036,6 +1036,12 @@
   }
 }
 
+@media (min-width: 1200px) {
+  #member #profile {
+    height: calc(100vh - 59px);
+  }
+}
+
 #member #privacy {
   height: calc(100vh - 59px);
 }

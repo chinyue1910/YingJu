@@ -141,24 +141,24 @@ export default {
           })
         })
     },
-    async fblogin () {
+    fblogin () {
       window.FB.login(response => {
-        window.FB.api('/me?fields=name,id,email,picture', response => {
+        window.FB.api('/me?fields=name,id,email', response => {
           const fbform = {
             account: response.email,
             password: response.id,
-            tel: '09' + response.id.substr(0, 8),
+            tel: '09--------',
             name: response.name,
             address: '',
             profileImg: 'http://graph.facebook.com/' + response.id + '/picture?type=large'
           }
-          console.log(fbform)
           this.axios.post(process.env.VUE_APP_APIURL + '/fblogin', fbform)
             .then(response => {
               const data = response.data
               if (data.success) {
                 this.$swal({
                   title: '登入成功',
+                  text: '請立即修改詳細聯絡資訊',
                   icon: 'success',
                   confirmButtonColor: '#3085d6',
                   confirmButtonText: '確定'
