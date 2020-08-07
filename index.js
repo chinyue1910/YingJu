@@ -268,6 +268,7 @@ app.get('/membership', async (req, res) => {
   }
 })
 
+// 刪除使用者帳號
 app.delete('/membership/:id', async (req, res) => {
   if (req.session.user !== process.env.MANAGER_NAME) {
     res.status(401).send({ success: false, message: '無權限' })
@@ -932,6 +933,42 @@ app.post('/send', async (req, res) => {
   } catch (error) {
     if (error.message === 'Not Exist') {
       res.status(401).send({ success: false, message: '此帳號不存在' })
+    }
+  }
+})
+
+// FB 登入
+app.post('/fblogin', async (req, res) => {
+  if (!req.headers['content-type'].includes('application/json')) {
+    res.status(400).send({ success: false, message: '格式不符' })
+    return
+  }
+  try {
+    let result = await db.users.find({ account: req.body.account, password: md5(req.body.password) })
+    if (result.length > 0) {
+      req.session.user = result[0].name
+      result = result[0]
+      res.send({ success: true, message: '', result })
+    } else {
+      result = await db.users.create({
+        account: req.body.account,
+        password: md5(req.body.password),
+        tel: '09' + req.body.password.substr(0, 8),
+        name: req.body.name,
+        address: '',
+        src: req.body.profileImg
+      })
+      req.session.user = result.name
+      res.send({ success: true, message: '', result })
+    }
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      const key = Object.keys(error.errors)[0]
+      const message = error.errors[key].message
+      res.status(400).send({ success: false, message })
+    } else {
+      res.status(500).send({ success: false, message: '伺服器錯誤' })
+      console.log(error)
     }
   }
 })
