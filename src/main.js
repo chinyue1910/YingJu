@@ -33,6 +33,8 @@ import 'vue-img-inputer/dist/index.css'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 
+import './assets/application.js'
+
 library.add(faBahai, faBars, faTimes, faAngleDoubleRight, faAngleDoubleLeft, faShoppingCart, faCartPlus, faAngleRight, faAngleLeft, faUserCircle, faFacebookF, faGoogle, faUser, faLine)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

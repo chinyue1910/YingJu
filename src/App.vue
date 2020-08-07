@@ -81,6 +81,17 @@ export default {
     setInterval(() => {
       this.heartbeat()
     }, 1000 * 60 * 5)
+
+    window.fbAsyncInit = function () {
+      window.FB.init({
+        appId: '3109557419151059',
+        cookie: true,
+        xfbml: true,
+        version: 'v8.0'
+      })
+
+      window.FB.AppEvents.logPageView()
+    }
   },
   computed: {
     user () {

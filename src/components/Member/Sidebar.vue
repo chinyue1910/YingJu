@@ -1,6 +1,6 @@
 <template lang="pug">
   b-sidebar#sidebar(shadow no-header :visible="visible" no-close-on-route-change :backdrop="backdrop" @hidden="$emit('sidebarclose')")
-    b-avatar(size="100px" :src="src" to="/member/profile")
+    b-avatar(size="100px" :src="profilesrc" to="/member/profile")
     .sidebar-item(v-for="(item,index) in sidebarItems" @click="itemclick(item.link)")
       vs-icon(:icon="item.icon" size="2rem").mx-5
       | {{ item.text }}
@@ -39,13 +39,17 @@ export default {
     },
     userID () {
       return this.$store.getters.userID
+    },
+    profilesrc () {
+      const url = process.env.VUE_APP_APIURL + '/profile/image/' + this.src
+      return (this.src === undefined) ? null : (this.src.includes('http')) ? this.src : url
     }
   },
   mounted () {
     this.axios
       .get(process.env.VUE_APP_APIURL + '/profile/' + this.userID)
       .then(response => {
-        this.src = process.env.VUE_APP_APIURL + '/profile/image/' + response.data.result[0].src
+        this.src = response.data.result[0].src
       })
       .catch(error => {
         this.$vs.notify({

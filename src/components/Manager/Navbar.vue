@@ -71,38 +71,46 @@ export default {
       this.$router.push('/manager/message')
     },
     logout () {
-      this.axios.delete(process.env.VUE_APP_APIURL + '/logout')
-        .then(response => {
-          const data = response.data
-          if (data.success) {
-            this.$store.commit('logout')
-            this.$swal({
-              title: '登出成功',
-              icon: 'success',
-              confirmButtonColor: '#3085d6',
-              confirmButtonText: '確定'
-            }).then(result => {
-              if (result.value || result.isDismissed) {
-                this.$router.push('/')
-              }
-            })
-          } else {
-            this.$swal({
-              title: data.message,
+      const vm = this
+      window.FB.getLoginStatus(function (response) {
+        if (response.status === 'connected') {
+          window.FB.logout(function (response) {
+            console.log(response)
+          })
+        }
+        vm.axios.delete(process.env.VUE_APP_APIURL + '/logout')
+          .then(response => {
+            const data = response.data
+            if (data.success) {
+              vm.$store.commit('logout')
+              vm.$swal({
+                title: '登出成功',
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '確定'
+              }).then(result => {
+                if (result.value || result.isDismissed) {
+                  vm.$router.push('/')
+                }
+              })
+            } else {
+              vm.$swal({
+                title: data.message,
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '確定'
+              })
+            }
+          })
+          .catch(error => {
+            vm.$swal({
+              title: error.response.data.message,
               icon: 'error',
               confirmButtonColor: '#3085d6',
               confirmButtonText: '確定'
             })
-          }
-        })
-        .catch(error => {
-          this.$swal({
-            title: error.response.data.message,
-            icon: 'error',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: '確定'
           })
-        })
+      })
     }
   },
   computed: {

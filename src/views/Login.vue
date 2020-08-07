@@ -21,7 +21,7 @@
             b-btn(variant="success" type="submit").mt-3.p-1 登入
             b-link.align-self-center.mt-3(@click="getpassword") 忘記密碼？
         b-col.pt-5.pt-lg-0(cols="12" lg="6").d-flex.flex-column.align-items-center
-          b-btn(variant="primary").mb-3
+          b-btn(variant="primary" @click="fblogin").mb-3
             b-col(cols="2")
               font-awesome-icon(:icon=['fab','facebook-f'] size="1x")
             b-col(cols="10")
@@ -140,6 +140,58 @@ export default {
             confirmButtonText: '確定'
           })
         })
+    },
+    async fblogin () {
+      window.FB.login(response => {
+        window.FB.api('/me?fields=name,id,email,picture', response => {
+          const fbform = {
+            account: response.email,
+            password: response.id,
+            tel: '09' + response.id.substr(0, 8),
+            name: response.name,
+            address: '',
+            profileImg: 'http://graph.facebook.com/' + response.id + '/picture?type=large'
+          }
+          console.log(fbform)
+          this.axios.post(process.env.VUE_APP_APIURL + '/fblogin', fbform)
+            .then(response => {
+              const data = response.data
+              if (data.success) {
+                this.$swal({
+                  title: '登入成功',
+                  icon: 'success',
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: '確定'
+                }).then(result => {
+                  if (result.value || result.isDismissed) {
+                    this.$store.commit('adduser', [data.result.name, data.result.account, data.result._id])
+                    this.$router.push('/member/profile')
+                  }
+                })
+              } else {
+                this.$swal({
+                  title: data.message,
+                  icon: 'error',
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: '確定'
+                })
+              }
+              this.form.account = ''
+              this.form.password = ''
+            })
+            .catch(error => {
+              this.$swal({
+                title: error.response.data.message,
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '確定'
+              })
+            })
+        })
+      }, {
+        scope: 'email, public_profile',
+        return_scopes: true
+      })
     }
   }
 }

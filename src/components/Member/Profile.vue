@@ -153,7 +153,7 @@ export default {
     },
     src () {
       const url = process.env.VUE_APP_APIURL + '/profile/image/' + this.boxs.src
-      return (this.boxs.src === undefined) ? null : url
+      return (this.boxs.src === undefined) ? null : (this.boxs.src.includes('http')) ? this.boxs.src : url
     }
   },
   watch: {
@@ -181,6 +181,7 @@ export default {
           email: { label: 'E-mail', id: 'account', initial: d.account },
           src: d.src
         }
+        console.log(this.boxs)
       })
       .catch(error => {
         this.$vs.notify({
