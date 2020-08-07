@@ -147,7 +147,7 @@ export default {
           const fbform = {
             account: response.email,
             password: response.id,
-            tel: '09--------',
+            tel: '09' + response.id.substr(0, 8),
             name: response.name,
             address: '',
             profileImg: 'http://graph.facebook.com/' + response.id + '/picture?type=large'

@@ -36,7 +36,7 @@
                 b-button(variant="danger" @click="cancel").ml-1 取消
           b-row(v-for="(input,index) in boxs.inputs" :key="index").py-3
             b-col.text-success.text-center {{ input.label }}
-            b-col {{ (input.initial.length === 0) ? '尚未有地址資訊' :(input.initial.length >10) ? input.initial.substr(0,10)+ '...' :input.initial.includes('--------') ? '請輸入手機號碼' : input.initial }}
+            b-col {{ (input.initial.length === 0) ? '尚未有地址資訊' :(input.initial.length >10) ? input.initial.substr(0,10)+ '...' : input.initial }}
           b-row.py-3
             b-col.text-success.text-center {{ (boxs.email === undefined) ? "" :boxs.email.label }}
             b-col {{ (boxs.email === undefined) ? "" :boxs.email.initial }}
