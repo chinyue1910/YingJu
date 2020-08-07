@@ -969,7 +969,7 @@
 }
 
 #member #profile {
-  height: calc(100vh - 59px);
+  min-height: calc(100vh - 59px);
 }
 
 #member #profile img {
@@ -1127,6 +1127,7 @@
 
 #member #track {
   min-height: calc(100vh - 59px);
+  height: calc(100% - 59px);
 }
 
 #manager {

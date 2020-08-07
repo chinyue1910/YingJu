@@ -747,7 +747,7 @@ $width: 50px;
     }
   }
   #profile {
-    height: calc(100vh - 59px);
+    min-height: calc(100vh - 59px);
     img {
       height: 100%;
     }
@@ -851,6 +851,7 @@ $width: 50px;
   }
   #track {
     min-height: calc(100vh - 59px);
+    height: calc(100% - 59px);
   }
 }
 
