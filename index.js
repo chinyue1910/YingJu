@@ -43,11 +43,17 @@ app.use(session({
     mongooseConnection: db.connection,
     collection: process.env.COLLECTION_SESSION
   }),
-  cookie: { maxAge: 1000 * 60 * 30 },
+  cookie: {
+    maxAge: 1000 * 60 * 30,
+    sameSite: 'none',
+    secure: true
+  },
   saveUninitialized: false,
   rolling: true,
   resave: true
 }))
+
+app.set('trust proxy', 1)
 
 let storage
 if (process.env.FTP === 'false') {
