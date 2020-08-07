@@ -590,9 +590,7 @@
 }
 
 #contact {
-  height: 100vh;
-  padding-top: 4rem;
-  position: relative;
+  padding-top: 5rem;
 }
 
 #contact img {
@@ -602,8 +600,6 @@
 }
 
 #contact .footer {
-  position: absolute;
-  bottom: 0;
   background-color: black;
 }
 

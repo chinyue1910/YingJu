@@ -494,16 +494,12 @@ $width: 50px;
 }
 
 #contact {
-  height: 100vh;
-  padding-top: 4rem;
+  padding-top: 5rem;
   img {
     object-fit: cover;
     max-width: 75%;
   }
-  position: relative;
   .footer {
-    position: absolute;
-    bottom: 0;
     background-color: black;
   }
 }
