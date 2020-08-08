@@ -48,12 +48,12 @@ app.use(session({
     sameSite: 'none',
     secure: true
   },
-  saveUninitialized: false,
+  saveUninitialized: true,
   rolling: true,
   resave: true
 }))
 
-app.set('trust proxy', 1)
+app.set('trust proxy', true)
 
 let storage
 if (process.env.FTP === 'false') {
