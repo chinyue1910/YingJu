@@ -591,6 +591,11 @@
 
 #contact {
   padding-top: 5rem;
+  min-height: 100vh;
+}
+
+#contact .container-fluid:nth-child(1) {
+  min-height: calc(100vh - 151.55px);
 }
 
 #contact img {
@@ -1240,14 +1245,7 @@
 }
 
 #manager #display .carditem img {
-  width: 100%;
-  height: 180px;
-}
-
-@media (min-width: 576px) {
-  #manager #display .carditem img {
-    height: 370px;
-  }
+  max-width: 100%;
 }
 
 #manager #display img {
@@ -1277,14 +1275,7 @@
 }
 
 #manager #article .carditem img {
-  width: 100%;
-  height: 180px;
-}
-
-@media (min-width: 576px) {
-  #manager #article .carditem img {
-    height: 294px;
-  }
+  max-width: 100%;
 }
 
 #manager #article img {

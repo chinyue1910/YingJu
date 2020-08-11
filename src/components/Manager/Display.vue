@@ -46,8 +46,8 @@
           :key="index"
           :style="{maxWidth:'100%'}"
           ).p-3.mb-3
-          .d-flex(:style="{border:'10px solid rgba(0,0,0,0.5)'}").flex-wrap
-            b-col.carditem(cols="12" md="5").px-0
+          .d-flex(:style="{border:'10px solid rgba(0,0,0,0.5)'}").flex-wrap.justify-content-between
+            b-col.carditem(cols="12" md="4").px-0
               b-img(:src="box.src")
             b-col.carditem(cols="12" md="7").d-flex.flex-column.justify-content-around
               vs-popup.holamundo(@close="bringback(box)" title="商品資訊" :active.sync='box.edit' button-close-hidden=true)
@@ -83,7 +83,7 @@
                 b-col {{ item.detail }}
               b-row.py-3.mx-3
                 b-col.text-success(:style="{flex:'0 0 80px'}") {{ box.description.label }}
-                b-col.text-break {{ box.description.detail.substr(0,100) }}
+                b-col.text-break {{ box.description.detail.substr(0,100)+'...' }}
               b-row.justify-content-center
                 b-button(variant="primary" @click="edit(box)") 更改資料
                 b-button.ml-3(variant="danger" @click="deleteitem(index)") 刪除商品

@@ -63,6 +63,7 @@ export default {
                   confirmButtonColor: '#3085d6',
                   confirmButtonText: '確定'
                 })
+                this.users.splice(data[1], 1)
               }
             })
             .catch(e => {

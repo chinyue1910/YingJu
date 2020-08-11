@@ -1,6 +1,6 @@
 <template lang="pug">
   #contact
-    b-container(fluid :style="{minHeight:'calc(100vh - 180px)'}").d-flex.flex-column.justify-content-center.pb-3
+    b-container(fluid).d-flex.flex-column.justify-content-center.pb-3
       b-row.h-100.flex-row-reverse
         b-col.d-flex.align-items-center.mb-3(cols="12" lg="6").justify-content-center
           b-img(:src="img")
