@@ -53,7 +53,7 @@ app.use(session({
   resave: true
 }))
 
-// app.set('trust proxy', true)
+app.set('trust proxy', true)
 
 let storage
 if (process.env.FTP === 'false') {
