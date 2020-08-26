@@ -48,7 +48,6 @@ app.use(session({
     sameSite: 'none',
     secure: true
   },
-  proxy: true,
   saveUninitialized: false,
   rolling: true,
   resave: false
