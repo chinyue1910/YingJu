@@ -48,9 +48,10 @@ app.use(session({
     sameSite: 'none',
     secure: true
   },
-  saveUninitialized: true,
+  proxy: true,
+  saveUninitialized: false,
   rolling: true,
-  resave: true
+  resave: false
 }))
 
 app.set('trust proxy', true)
