@@ -87,7 +87,9 @@ export default {
     fullwidth: Number
   },
   mounted () {
-    this.transform()
+    this.$nextTick(() => {
+      this.transform()
+    })
   },
   methods: {
     transform () {
