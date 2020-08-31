@@ -46,14 +46,15 @@ app.use(session({
   cookie: {
     maxAge: 1000 * 60 * 30,
     sameSite: 'none',
-    secure: true
+    secure: true,
+    httpOnly: false
   },
-  saveUninitialized: true,
+  saveUninitialized: false,
   rolling: true,
-  resave: true
+  resave: false
 }))
 
-// app.set('trust proxy', true)
+app.set('trust proxy', true)
 
 let storage
 if (process.env.FTP === 'false') {
