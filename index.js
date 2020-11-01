@@ -13,6 +13,7 @@ import fs from 'fs'
 import axios from 'axios'
 import Client from 'ftp'
 import nodemailer from 'nodemailer'
+import request from 'request'
 
 dotenv.config()
 
@@ -244,7 +245,7 @@ app.get('/profile/image/:name', async (req, res) => {
   } else {
     // https://expressjs.com/zh-tw/4x/api.html#res.redirect
     // 將要求重新導向
-    res.redirect('http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + req.params.name)
+    req.pipe(request('http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + req.params.name)).pipe(res)
   }
 })
 
@@ -429,7 +430,7 @@ app.get('/product/:name', async (req, res) => {
   } else {
     // https://expressjs.com/zh-tw/4x/api.html#res.redirect
     // 將要求重新導向
-    res.redirect('http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + req.params.name)
+    req.pipe(request('http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + req.params.name)).pipe(res)
   }
 })
 
@@ -785,7 +786,7 @@ app.get('/article/:name', async (req, res) => {
   } else {
     // https://expressjs.com/zh-tw/4x/api.html#res.redirect
     // 將要求重新導向
-    res.redirect('http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + req.params.name)
+    req.pipe(request('http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + req.params.name)).pipe(res)
   }
 })
 
