@@ -35,6 +35,8 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 
 import './assets/application.js'
 
+axios.defaults.withCredentials = true
+
 library.add(faBahai, faBars, faTimes, faAngleDoubleRight, faAngleDoubleLeft, faShoppingCart, faCartPlus, faAngleRight, faAngleLeft, faUserCircle, faFacebookF, faGoogle, faUser, faLine)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -50,8 +52,6 @@ Vue.use(Vuesax)
 Vue.use(VueAxios, axios)
 
 Vue.use(VueSweetalert2)
-
-axios.defaults.withCredentials = true
 
 Vue.prototype.$bus = new Vue()
 
